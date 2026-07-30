@@ -3,53 +3,62 @@
 import { useState, FormEvent } from 'react';
 
 const CONTACT_EMAIL = 'hello@dawnchorustravel.com';
-const WEB3FORMS_KEY = '996c5758-822f-4ddc-9957-f8cca4d2812a';
+const WEB3FORMS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_KEY;
+
+function validate(fd: FormData): string | null {
+  const name = (fd.get('name') || '').toString().trim();
+  const email = (fd.get('email') || '').toString().trim();
+  const message = (fd.get('message') || '').toString().trim();
+
+  if (!name) return 'Please enter your name.';
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return 'Please enter a valid email address.';
+  if (!message) return 'Let us know a little about the trip you have in mind.';
+  return null;
+}
 
 export default function ContactForm() {
   const [tripType, setTripType] = useState<'bespoke' | 'consult'>('bespoke');
   const [status, setStatus] = useState<'idle' | 'sending' | 'ok' | 'error'>('idle');
+  const [fieldError, setFieldError] = useState<string | null>(null);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.currentTarget;
     const fd = new FormData(form);
-    fd.append('trip_type', tripType === 'bespoke' ? 'Bespoke trip' : 'Consultancy call');
 
-    const hasKey = WEB3FORMS_KEY && !WEB3FORMS_KEY.startsWith('REPLACE');
-    if (hasKey) {
-      setStatus('sending');
-      fd.append('access_key', WEB3FORMS_KEY);
-      fd.append('subject', 'New Dawn Chorus enquiry');
-      fd.append('from_name', 'Dawn Chorus website');
-      try {
-        const res = await fetch('https://api.web3forms.com/submit', { method: 'POST', body: fd });
-        const data = await res.json();
-        if (data.success) {
-          setStatus('ok');
-          form.reset();
-        } else setStatus('error');
-      } catch {
+    // Honeypot: real visitors never fill this in, bots that auto-fill every input do.
+    if ((fd.get('botcheck') || '').toString().trim() !== '') return;
+
+    const validationMessage = validate(fd);
+    setFieldError(validationMessage);
+    if (validationMessage) return;
+
+    if (!WEB3FORMS_KEY) {
+      setStatus('error');
+      return;
+    }
+
+    setStatus('sending');
+    fd.append('trip_type', tripType === 'bespoke' ? 'Bespoke trip' : 'Consultancy call');
+    fd.append('access_key', WEB3FORMS_KEY);
+    fd.append('subject', 'New Dawn Chorus enquiry');
+    fd.append('from_name', 'Dawn Chorus website');
+
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { Accept: 'application/json' },
+        body: fd,
+      });
+      const data = await res.json();
+      if (data.success) {
+        setStatus('ok');
+        form.reset();
+      } else {
         setStatus('error');
       }
-    } else {
-      const g = (k: string) => (fd.get(k) || '').toString().trim();
-      const lines = [
-        'Enquiry type: ' + (tripType === 'bespoke' ? 'Bespoke trip' : 'Consultancy call'),
-        'Name: ' + g('name'),
-        'Email: ' + g('email'),
-        'Phone: ' + g('phone'),
-      ];
-      if (tripType === 'bespoke') {
-        lines.push(
-          'Destination: ' + g('destination'),
-          'Party size: ' + g('party_size'),
-          'Ideal month: ' + g('month'),
-          'Accommodation: ' + g('accommodation')
-        );
-      }
-      lines.push('', g('message'));
-      window.location.href =
-        'mailto:' + CONTACT_EMAIL + '?subject=' + encodeURIComponent('Website enquiry') + '&body=' + encodeURIComponent(lines.join('\n'));
+    } catch {
+      setStatus('error');
     }
   };
 
@@ -67,7 +76,15 @@ export default function ContactForm() {
         </button>
       </div>
 
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} noValidate>
+        <input
+          type="text"
+          name="botcheck"
+          tabIndex={-1}
+          autoComplete="off"
+          aria-hidden="true"
+          style={{ position: 'absolute', left: '-9999px', width: 1, height: 1, opacity: 0, pointerEvents: 'none' }}
+        />
         <div className="form-row">
           <label>Name</label>
           <input name="name" placeholder="John Doe" required />
@@ -132,9 +149,13 @@ export default function ContactForm() {
           <label>What do you want the trip to feel like?</label>
           <textarea
             name="message"
+            required
             placeholder="Courses you'd love, things you'd hate, anyone worth impressing, anything off-limits…"
           />
         </div>
+        {fieldError && (
+          <p style={{ fontSize: 13, color: '#b23b3b', marginTop: 10, textAlign: 'center' }}>{fieldError}</p>
+        )}
         <button type="submit" className="btn btn-accent" style={{ width: '100%', marginTop: 8 }} disabled={status === 'sending'}>
           {status === 'sending' ? 'Sending…' : 'Send enquiry'}
         </button>
@@ -142,12 +163,23 @@ export default function ContactForm() {
           No obligation, no planning fee, no strings: only a conversation about the trip.
         </p>
         {status === 'ok' ? (
-          <p style={{ fontSize: 13, color: 'var(--accent)', marginTop: 16, textAlign: 'center', fontWeight: 500 }}>
-            Thank you — your enquiry is on its way. I&apos;ll reply within 24 hours.
-          </p>
+          <div style={{ marginTop: 20, textAlign: 'center' }}>
+            <p
+              style={{
+                fontFamily: 'var(--annon-font-display)',
+                fontSize: 22,
+                fontWeight: 600,
+                lineHeight: 1.3,
+                color: 'var(--accent)',
+                margin: 0,
+              }}
+            >
+              Thank you for your query — we&apos;ll endeavour to respond quickly during working hours.
+            </p>
+          </div>
         ) : status === 'error' ? (
           <p style={{ fontSize: 13, color: '#b23b3b', marginTop: 16, textAlign: 'center' }}>
-            Something went wrong. Please email{' '}
+            Something went wrong sending your enquiry. Please try again, or email{' '}
             <a href={'mailto:' + CONTACT_EMAIL} style={{ color: 'inherit', textDecoration: 'underline' }}>
               {CONTACT_EMAIL}
             </a>{' '}

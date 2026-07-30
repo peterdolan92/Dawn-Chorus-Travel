@@ -42,7 +42,7 @@ export default function ServicesPage() {
             Two ways to <em style={{ fontFamily: 'var(--annon-font-serif)', fontWeight: 400 }}>work</em>{' '}with Dawn&nbsp;Chorus.
           </h1>
           <p className="body-lg" style={{ color: 'var(--annon-fg-2)', maxWidth: 680, marginTop: 32 }}>
-            One end-to-end and fully managed, one a focused hour of advice. Both start with a real conversation.
+            One end-to-end and fully managed. The other, a focused hour of advice. Both start with a real conversation.
           </p>
 
           <Reveal as="div" className="svc-hero-grid" stagger>
