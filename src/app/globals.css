@@ -2099,10 +2099,11 @@ html { scroll-behavior: smooth; overflow-x: clip; }
   border-top: 1px solid var(--annon-border);
 }
 .process-step {
-  padding: 32px 24px 32px 0;
+  padding: 32px 24px;
   border-right: 1px solid var(--annon-border);
   position: relative;
 }
+.process-step:first-child { padding-left: 0; }
 .process-step:last-child { border-right: none; padding-right: 0; }
 .process-step .p-num {
   font-family: var(--annon-font-display);
