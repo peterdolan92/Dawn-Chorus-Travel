@@ -171,6 +171,26 @@ export default function ServicesPage() {
         </div>
       </section>
 
+      <section className="section" style={{ paddingTop: 8 }}>
+        <div className="container">
+          <div style={{ marginBottom: 24 }}>
+            <Eyebrow>Behind the Journey</Eyebrow>
+          </div>
+          <h2 className="subheading" style={{ fontSize: 'clamp(36px, 4.5vw, 56px)', lineHeight: 1.05, letterSpacing: '-0.8px', maxWidth: 900, margin: 0 }}>
+            Built on relationships.
+          </h2>
+          <p className="body-lg" style={{ color: 'var(--annon-fg-2)', maxWidth: 900, marginTop: 24 }}>
+            Every Dawn Chorus journey is personally planned, but brought to life through a trusted network of golf
+            clubs, hotels, private drivers, guides and local partners across Ireland, Scotland and England.
+          </p>
+          <p className="body-lg" style={{ color: 'var(--annon-fg-2)', maxWidth: 900, marginTop: 16 }}>
+            Over time, we&apos;ve built relationships with people who share the same approach of genuine
+            hospitality, local knowledge, and attention to the details that make a trip special. Their insight,
+            recommendations and connection to each destination help shape the Dawn Chorus experience.
+          </p>
+        </div>
+      </section>
+
       <section className="section surface-muted">
         <div className="container">
           <Reveal
