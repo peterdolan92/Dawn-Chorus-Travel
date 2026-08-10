@@ -86,9 +86,9 @@ export default function AboutPage() {
             <Eyebrow>Beyond the course</Eyebrow>
           </div>
           <h2 className="subheading" style={{ fontSize: 'clamp(36px, 4.5vw, 64px)', lineHeight: 1.05, letterSpacing: '-0.9px', maxWidth: 900, marginBottom: 40 }}>
-            The things we find ourselves
+            The things we look for
             <br />
-            seeking out, time and again.
+            along the way.
           </h2>
           <Reveal as="div" className="interests-grid" stagger>
             {INTERESTS.map(([n, t, sub, img, pos]) => (
