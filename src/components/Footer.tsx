@@ -51,7 +51,9 @@ export default function Footer() {
             <div className="footer-head">Follow</div>
             <ul className="footer-list">
               <li>
-                <a>Instagram</a>
+                <a href="https://www.instagram.com/dawnchorustravel" target="_blank" rel="noopener noreferrer">
+                  Instagram
+                </a>
               </li>
               <li>
                 <a>Journal</a>
