@@ -27,7 +27,7 @@ const playfair = Playfair_Display({
 const SITE_URL = 'https://dawnchorustravel.com';
 const SITE_TITLE = 'Dawn Chorus — Bespoke Golf & Culture Travel in Ireland, Scotland & England';
 const SITE_DESCRIPTION =
-  'Dawn Chorus designs bespoke golf and culture journeys across Ireland, Scotland and England — championship links, hidden gems, and trips shaped around rhythm, place and atmosphere.';
+  'Across Ireland, Scotland & England, we shape journeys guided by rhythm, place, and atmosphere, from celebrated links to quieter corners of the game.';
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
