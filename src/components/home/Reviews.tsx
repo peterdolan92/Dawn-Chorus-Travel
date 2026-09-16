@@ -38,7 +38,7 @@ const REVIEWS = [
   {
     stars: 5,
     text: 'Peter set up a week-long golf trip for 16 of us and it went off without a hitch. 10/10. Our gang would love to do another trip soon, maybe Scotland next time!',
-    who: 'Tim S.',
+    who: 'Tom S.',
     trip: 'Ireland · 2024',
     cls: 'accent',
     wide: true,
