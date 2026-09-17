@@ -43,12 +43,14 @@ const REVIEWS = [
     cls: 'accent',
     wide: true,
   },
+  /* Temporarily hidden at client's request — re-enable when ready.
   {
     stars: 5,
     text: 'Thirty of us across three generations. Peter managed every detail, and even tracked down our Irish relatives to arrange a reunion.',
     who: 'Gail B.',
     trip: 'Family trip · 2024',
   },
+  */
 ];
 
 export default function Reviews() {
