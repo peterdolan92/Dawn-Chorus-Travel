@@ -24,10 +24,28 @@ const playfair = Playfair_Display({
   weight: ['400', '500'],
 });
 
-const SITE_URL = 'https://dawnchorustravel.com';
+const SITE_URL = 'https://www.dawnchorustravel.com';
 const SITE_TITLE = 'Dawn Chorus — Bespoke Golf & Culture Travel in Ireland, Scotland & England';
 const SITE_DESCRIPTION =
   'Across Ireland, Scotland & England, we shape journeys guided by rhythm, place, and atmosphere, from celebrated links to quieter corners of the game.';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'TravelAgency',
+  '@id': `${SITE_URL}/#organization`,
+  name: 'Dawn Chorus Travel',
+  legalName: 'PWJD Limited',
+  url: `${SITE_URL}/`,
+  image: `${SITE_URL}/assets/dest-hero-v2.webp`,
+  description:
+    'Bespoke golf and culture travel across Ireland, Scotland and England, designed around each guest.',
+  areaServed: ['Ireland', 'Scotland', 'England'],
+  knowsAbout: ['Golf travel', 'Links golf', 'Luxury travel in Ireland', 'Bespoke itineraries'],
+  founder: {
+    '@type': 'Person',
+    name: 'Peter Dolan',
+  },
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -61,6 +79,12 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en" className={`${spaceGrotesk.variable} ${inter.variable} ${playfair.variable}`}>
       <body>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c'),
+          }}
+        />
         <Nav />
         {children}
         <Footer />
