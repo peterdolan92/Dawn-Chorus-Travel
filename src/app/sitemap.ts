@@ -1,6 +1,6 @@
 import type { MetadataRoute } from 'next';
 
-const SITE_URL = 'https://dawnchorustravel.com';
+const SITE_URL = 'https://www.dawnchorustravel.com';
 
 const ROUTES: { path: string; priority: number; changeFrequency: NonNullable<MetadataRoute.Sitemap[number]['changeFrequency']> }[] = [
   { path: '', priority: 1, changeFrequency: 'weekly' },
