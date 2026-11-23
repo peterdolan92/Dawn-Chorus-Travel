@@ -33,18 +33,28 @@ const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'TravelAgency',
   '@id': `${SITE_URL}/#organization`,
-  name: 'Dawn Chorus Travel',
+  name: 'Dawn Chorus',
+  alternateName: ['Dawn Chorus Travel', 'dawnchorustravel.com'],
   legalName: 'PWJD Limited',
   url: `${SITE_URL}/`,
   image: `${SITE_URL}/assets/dest-hero-v2.webp`,
   description:
-    'Bespoke golf and culture travel across Ireland, Scotland and England, designed around each guest.',
+    'Bespoke golf and culture tour operator designing private journeys across Ireland, Scotland and England.',
+  email: 'hello@dawnchorustravel.com',
+  telephone: '+353 85 15 44 125',
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Cork',
+    addressCountry: 'IE',
+  },
   areaServed: ['Ireland', 'Scotland', 'England'],
   knowsAbout: ['Golf travel', 'Links golf', 'Luxury travel in Ireland', 'Bespoke itineraries'],
   founder: {
     '@type': 'Person',
     name: 'Peter Dolan',
+    sameAs: ['https://www.instagram.com/peterdolangolf/'],
   },
+  sameAs: ['https://www.instagram.com/dawnchorustravel/'],
 };
 
 export const metadata: Metadata = {
